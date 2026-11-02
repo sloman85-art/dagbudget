@@ -13,5 +13,59 @@
     <input id="bedrag" type="text" inputmode="decimal" placeholder="€100,00">
     <button id="berekenen">Bereken</button>
     <div id="resultaat"></div>
+    <script type="py">
+import datetime
+from pyscript import when, document
+
+Vandaag = datetime.date.today()
+Jaar = Vandaag.year
+Maand = Vandaag.month
+SalarisDag = 21
+      
+def DateCorrect(datum):
+
+	i = datum.weekday()
+
+	if i>= 5:
+
+		datum = datum - datetime.timedelta(days=i-4)
+
+	return datum
+
+if Maand == 1:
+	VorigJaar,VorigeMaand = Jaar - 1, 12 
+
+else:
+	VorigJaar,VorigeMaand = Jaar, Maand -1
+
+if Maand == 12:
+	VolgendJaar, VolgendeMaand = Jaar + 1, 1
+
+else: 
+	VolgendJaar, VolgendeMaand = Jaar, Maand + 1
+
+Salarisdezemaand = DateCorrect(datetime.date(Jaar,Maand,SalarisDag))
+
+if Vandaag >= Salarisdezemaand:
+	VorigSalaris = Salarisdezemaand
+	VolgendSalaris = DateCorrect(datetime.date(VolgendJaar,VolgendeMaand,SalarisDag))
+
+else:
+	VorigSalaris = DateCorrect(datetime.date(VorigJaar,VorigeMaand,SalarisDag))
+	VolgendSalaris = Salarisdezemaand
+
+Dagen = (VolgendSalaris - Vandaag).days
+      
+@when("click", "#berekenen")
+def bereken():
+	Saldo = float(document.querySelector("#bedrag").value.replace(",","."))
+	DagSaldo = Saldo / Dagen
+
+  tekst = f"Vorig salaris: {VorigSalaris:%d-%m-%Y}\n"
+  tekst = tekst + f"Volgend salaris: {VolgendSalaris:%d-%m-%Y}\n"
+  tekst = tekst + f"Dagen tot salaris: {Dagen}\n"
+  tekst = tekst + f"Je kunt €{DagSaldo:.2f} per dag uitgeven".replace(".", ",")
+  document.querySelector("#resultaat").innerText = tekst
+    </script>
   </body>
 </html>
