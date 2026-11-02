@@ -60,11 +60,11 @@ Dagen = (VolgendSalaris - Vandaag).days
 def bereken():
 	Saldo = float(document.querySelector("#bedrag").value.replace(",","."))
 	DagSaldo = Saldo / Dagen
-tekst = f"Vorig salaris: {VorigSalaris:%d-%m-%Y}\n"
-tekst = tekst + f"Volgend salaris: {VolgendSalaris:%d-%m-%Y}\n"
-tekst = tekst + f"Dagen tot salaris: {Dagen}\n"
-tekst = tekst + f"Je kunt €{DagSaldo:.2f} per dag uitgeven".replace(".", ",")
-document.querySelector("#resultaat").innerText = tekst
+	tekst = f"Vorig salaris: {VorigSalaris:%d-%m-%Y}\n"
+	tekst = tekst + f"Volgend salaris: {VolgendSalaris:%d-%m-%Y}\n"
+	tekst = tekst + f"Dagen tot salaris: {Dagen}\n"
+	tekst = tekst + f"Je kunt €{DagSaldo:.2f} per dag uitgeven".replace(".", ",")
+	document.querySelector("#resultaat").innerText = tekst
 		
     </script>
   </body>
